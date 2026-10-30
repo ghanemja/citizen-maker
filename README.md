@@ -1,6 +1,6 @@
-# NPCity: browser based citizens on demand
+# Citizen Maker: browser based citizens on demand
 
-**Live:** https://ghanemja.github.io/npcity/
+**Live:** https://ghanemja.github.io/citizen-maker/
 
 A parametric, batch production line of NPC characters for games, running entirely in your
 browser (no server, no install, no build step). Make one person by hand or a seeded batch of
@@ -47,7 +47,7 @@ three.js (via importmap, from a CDN), no bundler.
 - `js/export-pack.js`: the zip: GLB export, baked clips, props, `HANDOFF.md`, viewer
 - `models/human/`: the MakeHuman data, baked by `node tools/human/bake.mjs`
 
-NPCity grew out of the town at [ghanemja.github.io](https://ghanemja.github.io/).
+Citizen Maker grew out of the town at [ghanemja.github.io](https://ghanemja.github.io/).
 
 ## License
 

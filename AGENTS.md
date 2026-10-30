@@ -1,6 +1,6 @@
 # Rules for agents working in this repo
 
-- This repo is served by GitHub Pages from `main` (https://ghanemja.github.io/npcity/). Work on `main` unless told otherwise; a change isn't done until it's live.
+- This repo is served by GitHub Pages from `main` (https://ghanemja.github.io/citizen-maker/). Work on `main` unless told otherwise; a change isn't done until it's live.
 - Bump the cache token `js/maker.js?cb=NN` in `index.html` whenever you edit `js/` (and the `export-pack.js?cb=NN` import in `js/maker.js` when you edit the export).
 
 ## People are always clothed
