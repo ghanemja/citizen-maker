@@ -35,6 +35,16 @@ python3 -m http.server
 
 Then open http://localhost:8000/.
 
+## Hype reel
+
+`hype.html` is a scripted 1920×1080 reel: the plaza on the left, a featured citizen on the right cycling through actions and styles. Open it to watch it loop, or record it to MP4 (needs Playwright and ffmpeg):
+
+```bash
+node tools/record-hype.mjs npcity-hype.mp4
+```
+
+(with `python3 -m http.server 8000` running in the repo root).
+
 ## How it's built
 
 three.js (via importmap, from a CDN), no bundler.
