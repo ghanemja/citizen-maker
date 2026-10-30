@@ -425,22 +425,46 @@ export function makeMotion(person) {
         screen.position.z = 0.0047 * S; screen.userData.noInk = true; g.add(body, screen); return g;
       });
       showProp('phone'); breathe(t, 0.7);
-      // the palm turned up toward the face at chest height, then the phone laid IN that palm, from the
-      // hand's own bones (aimed separately, the two never agreed and the phone ended up beside the hand)
+      // the palm turned up toward the face at chest height, the fingers running across the body (toward its
+      // middle) behind an upright phone, and the thumb coming up over its near edge onto the screen. The phone
+      // is laid IN that palm from the hand's own bones (aimed separately, the two never agreed and the phone
+      // ended up beside the hand)
       const c = M.shoulder.R.clone().add(new THREE.Vector3(0.12 * S, -0.17 * S, 0.24 * S));
-      const faceN = new THREE.Vector3(0, 0.62, -0.78), upF = new THREE.Vector3(0.12, 0.78, 0.62).normalize();
-      hold('R', c, upF, faceN, M.shoulder.R.clone().add(new THREE.Vector3(-0.12, -0.7, 0.1)), { along: 0.5 });
+      // (the phone's upright and the palm's normal both lie in the person's y–z plane, so fingers square across
+      // the phone run along x; tilted up a little, as a relaxed wrist holds them)
+      const faceN = new THREE.Vector3(0, 0.62, -0.78), phoneUp = new THREE.Vector3(0, 0.78, 0.62), acrossF = new THREE.Vector3(1, 0, 0).addScaledVector(phoneUp, 0.2).normalize();
+      hold('R', c, acrossF, faceN, M.shoulder.R.clone().add(new THREE.Vector3(-0.12, -0.7, 0.1)), { along: 0.5 });
       palmTo(B, 'R', toW(faceN));                                           // (the forearm turns palm-up: the wrist alone can't)
-      orientHand(B, 'R', toW(upF), toW(faceN));
+      orientHand(B, 'R', toW(acrossF), toW(faceN));
       curlFingers(B, 'R', 0);
+      // the fingers lie straight along the phone's back, in the palm's plane (any curl toward the palm,
+      // even a relaxed one, went straight up through the phone lying on it)
+      { const N = palmNormal(B, 'R');
+        for (const f of [2, 3, 4, 5]) for (let j = 1; j <= 3; j++) {
+          const b = B[`finger${f}-${j}.R`], nx = B[`finger${f}-${j + 1}.R`];
+          const dir = (nx ? wp(nx).sub(wp(b)) : wp(b).sub(wp(b.parent))).normalize();
+          turnTo(b, dir, dir.clone().addScaledVector(N, -dir.dot(N) + 0.08 * (j - 1)).normalize());   // (the tips just touch it)
+        } }
       rig.updateMatrixWorld(true);
       { const w = wp(B['wrist.R']), kn = wp(B['finger3-1.R']), n = palmNormal(B, 'R'), f = kn.clone().sub(w).normalize();
-        const at = w.clone().lerp(kn, 0.75).addScaledVector(n, M.palmHalf + 0.006 * S).addScaledVector(f, 0.02 * S);
-        const xa = new THREE.Vector3().crossVectors(f, n).normalize(), m4 = new THREE.Matrix4().makeBasis(xa, f, n);
-        const qw = new THREE.Quaternion().setFromRotationMatrix(m4), qr = rig.getWorldQuaternion(new THREE.Quaternion()).invert();
-        setProp(phone, rig.worldToLocal(at), qr.multiply(qw)); }
-      // the fingers lie lightly along its sides
-      for (const f of [2, 3, 4, 5]) { const b = B[`finger${f}-2.R`]; rotateBone(b, hingeOf(B, 'R', palmNormal(B, 'R')), THREE.MathUtils.degToRad(12)); }
+        const xa = new THREE.Vector3().crossVectors(f, n).normalize();      // toward the thumb (up, with the fingers across)
+        // the phone stands upright in the palm's plane, its long side across the fingers
+        const up = toW(phoneUp), y = up.addScaledVector(n, -up.dot(n)).normalize(), x = new THREE.Vector3().crossVectors(y, n);
+        const at = w.clone().addScaledVector(f, 1.35 * M.palm).addScaledVector(xa, -0.02 * S).addScaledVector(n, M.palmHalf + 0.016 * S);   // (its far edge where the fingertips end)
+        const qw = new THREE.Quaternion().setFromRotationMatrix(new THREE.Matrix4().makeBasis(x, y, n)), qr = rig.getWorldQuaternion(new THREE.Quaternion()).invert();
+        setProp(phone, rig.worldToLocal(at), qr.multiply(qw));
+        // the thumb arcs gently up over the phone's near edge and rests its pad on the screen just inside it,
+        // each joint bending the natural way (aimed joint by joint at fixed directions, it rose and then
+        // hooked back down at the tip)
+        const toWr = w.clone().sub(at), nearDir = toWr.addScaledVector(n, -toWr.dot(n)).normalize();     // across the screen toward the wrist
+        const pad = at.clone().addScaledVector(nearDir, pw / 2 - 0.02 * S).addScaledVector(n, 0.0045 * S + 0.008 * S);
+        for (let j = 1; j <= 3; j++) {
+          const b = B[`finger1-${j}.R`], nx = B[`finger1-${j + 1}.R`], from = nx ? wp(nx).sub(wp(b)) : wp(b).sub(wp(b.parent));
+          const want = pad.clone().sub(wp(b));
+          if (j < 3) want.normalize().addScaledVector(n, [0.5, 0.25][j - 1]);           // (lifted, so it clears the edge)
+          else want.addScaledVector(n, -want.dot(n) * 0.7);                          // the pad lies nearly flat on the glass
+          turnTo(b, from, want.normalize()); rig.updateMatrixWorld(true);
+        } }
     },
   };
 
