@@ -45,7 +45,7 @@ three.js (via importmap, from a CDN), no bundler.
 - `js/motion.js`: the rig's motions (two-bone IK; walk, run, sit, bike, bystanders) and the bike
 - `js/render-styles.js`, `js/style.js`: the ten drawing styles and the ink outlines
 - `js/export-pack.js`: the zip: GLB export, baked clips, props, `HANDOFF.md`, viewer
-- `models/human/`: the MakeHuman data, baked by `node tools/human/bake.mjs`
+- `models/human/`: the MakeHuman data, baked by `node tools/human/bake.mjs` and then packed by `node tools/human/pack.mjs` (the browser loads the `.pack` files: the same numbers, about half the download; the `.json` stay as the fallback)
 
 Citizen Maker grew out of the town at [ghanemja.github.io](https://ghanemja.github.io/).
 
