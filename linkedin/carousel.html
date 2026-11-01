@@ -1,0 +1,94 @@
+<!doctype html><html><head><meta charset="utf-8"><style>
+@page{size:1080px 1350px;margin:0}
+*{box-sizing:border-box;margin:0}
+body{font-family:Georgia,serif;color:#24201c}
+.s{width:1080px;height:1350px;padding:90px 80px;background:#f4ead8;page-break-after:always;display:flex;flex-direction:column;position:relative;overflow:hidden}
+.s.dark{background:#1d1b19;color:#f4ead8}
+.k{font:600 26px/1 Helvetica,Arial,sans-serif;letter-spacing:.14em;text-transform:uppercase;color:#d9573f;margin-bottom:34px}
+h1{font-size:86px;line-height:1.05;font-weight:700;margin-bottom:40px}
+h2{font-size:64px;line-height:1.1;margin-bottom:34px}
+p{font-size:36px;line-height:1.4;margin-bottom:24px}
+.sm{font:28px/1.45 Helvetica,Arial,sans-serif;opacity:.75}
+img{width:100%;border-radius:18px;border:3px solid #24201c;margin:16px 0 30px;object-fit:cover}
+.n{position:absolute;bottom:50px;right:80px;font:24px Helvetica,Arial,sans-serif;opacity:.5}
+code{font-family:Menlo,monospace;font-size:.85em;background:rgba(0,0,0,.08);padding:2px 8px;border-radius:6px}
+.dark code{background:rgba(255,255,255,.12)}
+ul{font-size:36px;line-height:1.5;padding-left:40px}li{margin-bottom:14px}
+.big{font-size:150px;font-weight:700;line-height:1;color:#d9573f}
+</style></head><body>
+
+<div class="s dark"><div class="k">Building with AI</div>
+<h1>Use AI to build the machine.<br>Not to <em>be</em> the machine.</h1>
+<p>Mainframes, pacemakers and car ECUs ran for generations without a single token.</p>
+<p>That's my bar: AI helps me make it. Nothing calls a model when you use it.</p>
+<div class="n">swipe →</div></div>
+
+<div class="s"><div class="k">Lesson 1</div>
+<h2>Spend tokens once, at build time.</h2>
+<p>A model call at run time is a bill, a latency, and an outage on every click, forever.</p>
+<p>A model call at build time is paid once. What it leaves behind is code that runs for free.</p>
+<div class="big" style="margin-top:auto">0</div><p class="sm">model calls when anyone uses the projects in this deck</p>
+<div class="n">2</div></div>
+
+<div class="s"><div class="k">Example · Citizen Maker</div>
+<h2>Game characters on demand, no AI inside.</h2>
+<img src="citizen-maker.png" style="height:520px">
+<p class="sm">Up to 200 rigged, animated people per batch, 10 drawing styles, exported as .glb. Plain three.js on GitHub Pages: no server, no API key. Built with an agent; runs on math.</p>
+<div class="n">3</div></div>
+
+<div class="s"><div class="k">Lesson 2</div>
+<h2>Replace "generate" with "seed".</h2>
+<p>Ask an LLM for 30 villagers and you get 30 new villagers each time, and a new bill.</p>
+<p>Citizen Maker takes a seed: <code>?batch=30&amp;seed=harbour</code> makes the same crowd, every time, on any machine.</p>
+<p>Reproducible means testable. Testable means shippable.</p>
+<div class="n">4</div></div>
+
+<div class="s dark"><div class="k">Example · equalizer</div>
+<h2>Beats from math.</h2>
+<img src="equalizer.png" style="height:500px;border-color:#f4ead8">
+<p class="sm">No samples, no generative audio. Every drum and melody is an equation you can read and edit, computed 44,100 times a second. AI helped write the synth; the synth needs no AI.</p>
+<div class="n">5</div></div>
+
+<div class="s"><div class="k">Lesson 3</div>
+<h2>Ask the agent for tools, not answers.</h2>
+<ul><li>Not "describe this company's logo" ×500 — a <code>build.mjs</code> that writes all 500 pages (QR Compass).</li>
+<li>Not "tell me which assets behave alike" — a <code>run_all.sh</code> that regenerates every number on a CPU (Behaviors).</li>
+<li>Not "load the body data" — a bake script that packed it 3.9 MB → 1.85 MB, lossless.</li></ul>
+<p class="sm" style="margin-top:20px">An answer is used once. A tool is used every day.</p>
+<div class="n">6</div></div>
+
+<div class="s"><div class="k">Example · QR Compass</div>
+<h2>The Fortune 500, as a static site.</h2>
+<img src="qr.png" style="height:560px">
+<p class="sm">Every company gets a 3D model that turns into its own scannable QR code. All generated at build time from open data, then served as plain files.</p>
+<div class="n">7</div></div>
+
+<div class="s"><div class="k">Example · Behaviors</div>
+<h2>Search 2,166 3D assets by how they move.</h2>
+<img src="cover.jpg" style="height:520px">
+<p class="sm">Simulated pushes, ramps and drops, summarized into a searchable index. The learning happens offline on a CPU; the live demo is a lookup.</p>
+<div class="n">8</div></div>
+
+<div class="s"><div class="k">Lesson 4</div>
+<h2>Write the rules down, so you stop paying to re-explain them.</h2>
+<p>Every repo gets an <code>AGENTS.md</code>: how to deploy, what to check before pushing, what never to do.</p>
+<p class="sm">"Pivot limbs at the joint." "Check all four compass angles." "Bump the cache token."</p>
+<p>Short context, fewer retries, fewer tokens per session.</p>
+<div class="n">9</div></div>
+
+<div class="s"><div class="k">Lesson 5</div>
+<h2>Hand off to files, not to a chatbot.</h2>
+<p>Citizen Maker's export zip carries a <code>HANDOFF.md</code>, a manifest and a viewer, so the next person (or agent) can drop the models into Unity, Unreal, Godot or Blender without asking anyone.</p>
+<p>The output outlives the conversation that made it.</p>
+<div class="n">10</div></div>
+
+<div class="s dark"><div class="k">The checklist</div>
+<h2>Before you put a model in the loop, ask:</h2>
+<ul><li>Could this be a lookup, a formula or a seed?</li>
+<li>Could the AI write the code once instead of answering every time?</li>
+<li>Will it still work with the API key revoked?</li>
+<li>Can I reproduce yesterday's output exactly?</li></ul>
+<p style="margin-top:auto">AI is a phenomenal builder. Most products just need what it builds.</p>
+<p class="sm">github.com/ghanemja · ghanemja.github.io</p></div>
+
+</body></html>
